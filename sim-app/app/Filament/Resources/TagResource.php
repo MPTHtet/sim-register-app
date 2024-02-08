@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Filament\Resources\TagResource\Pages;
+use App\Filament\Resources\TagResource\RelationManagers;
+use App\Models\Tag;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,15 +15,19 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 //filament
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
-class UserResource extends Resource
-{
-    protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+class TagResource extends Resource
+{
+    protected static ?string $model = Tag::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -31,35 +35,32 @@ class UserResource extends Resource
             ->schema([
                 Card::make()->schema([
                 TextInput::make('name')->required(),
-                TextInput::make('email')->email()->required(),
-                TextInput::make('password')
-                    ->password()
-                    ->required()->confirmed(),
-                TextInput::make('password_confirmation')->password()->required(),
+                ColorPicker::make('color')->required(),
                 Toggle::make('is_active')
-                    ->onIcon('heroicon-m-bolt')
-                    ->offIcon('heroicon-m-user')
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->default(true)
-            ])
-        ])
-        ;
-    }
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('email'),
-                TextColumn::make('last_login_at'),
-                ToggleColumn::make('is_active')
                     ->onIcon('heroicon-m-bolt')
                     ->offIcon('heroicon-m-bolt-slash')
                     ->onColor('success')
                     ->offColor('danger')
                     ->default(true),
+                ])
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([                
+                TextColumn::make('name')
+                    ->searchable(),
+                ColorColumn::make('color')
+                    ->copyable()
+                    ->copyMessage('Color code copied')
+                    ->copyMessageDuration(1500),
+                ToggleColumn::make('is_active')
+                    ->onIcon('heroicon-m-bolt')
+                    ->offIcon('heroicon-m-bolt-slash')
+                    ->onColor('success')
+                    ->offColor('danger'),
             ])
             ->filters([
                 //
@@ -84,9 +85,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListTags::route('/'),
+            'create' => Pages\CreateTag::route('/create'),
+            'edit' => Pages\EditTag::route('/{record}/edit'),
         ];
     }
 }

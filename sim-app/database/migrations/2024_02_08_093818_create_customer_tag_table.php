@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->datetime('last_login_at')->nullable();
-            $table->string('last_login_ip')->nullable();
+        Schema::create('customer_tag', function (Blueprint $table) {
+            $table->foreignId('customer_id')->constrained();
+        $table->foreignId('tag_id')->constrained();
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('customer_tag');
     }
 };

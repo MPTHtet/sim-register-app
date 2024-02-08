@@ -22,7 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'last_login_at',
-        'last_login_ip',
         'is_active'
     ];
 

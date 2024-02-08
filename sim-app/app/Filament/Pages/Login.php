@@ -1,4 +1,6 @@
 <?php
+
+namespace App\Filament\Pages;
 use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Component;
@@ -10,7 +12,6 @@ class Login extends BaseAuth
     {
         return $form
             ->schema([
-                $this->getEmailFormComponent(), 
                 $this->getLoginFormComponent(), 
                 $this->getPasswordFormComponent(),
                 $this->getRememberFormComponent(),
@@ -26,4 +27,13 @@ class Login extends BaseAuth
             ->autocomplete()
             ->autofocus();
     } 
+    protected function getCredentialsFromFormData(array $data): array
+    {
+        $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL ) ? 'email' : 'name';
+ 
+        return [
+            $login_type => $data['login'],
+            'password'  => $data['password'],
+        ];
+    }
 }
