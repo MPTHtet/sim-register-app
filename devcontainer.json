@@ -15,7 +15,17 @@
         "eg2.tslint",
         "christian-kohler.path-intellisense",
         "esbenp.prettier-vscode",
-        "CoenraadS.bracket-pair-colorizer"
+        "CoenraadS.bracket-pair-colorizer",
+        "felixfbecker.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.php-mysql",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.php-mysql",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.php-mysql",
+        "felixfbecker.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.php-mysql"
     ],
     "settings": {
         "#terminal.integrated.shell.linux": "/bin/bash"
