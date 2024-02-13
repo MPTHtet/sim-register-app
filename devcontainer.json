@@ -1,43 +1,35 @@
-
 {
-    "name": "codespaces-laravel",
-    "dockerComposeFile": ["docker-compose.yml"],
-    "workspaceFolder": "/workspace",
-    "service": "app",
-    "shutdownAction": "stopCompose",
-    "extensions": [
-        "editorconfig.editorconfig",
-        "ryannaddy.laravel-artisan",
-        "amiralizadeh9480.laravel-extra-intellisense",
-        "stef-k.laravel-goto-controller",
-        "codingyu.laravel-goto-view",
-        "mikestead.dotenv",
-        "eg2.tslint",
-        "christian-kohler.path-intellisense",
-        "esbenp.prettier-vscode",
-        "CoenraadS.bracket-pair-colorizer",
-        "felixfbecker.php-debug",
-        "bmewburn.vscode-intelephense-client",
-        "ikappas.php-mysql",
-        "bmewburn.vscode-intelephense-client",
-        "ikappas.php-mysql",
-        "bmewburn.vscode-intelephense-client",
-        "ikappas.php-mysql",
-        "felixfbecker.php-debug",
-        "bmewburn.vscode-intelephense-client",
-        "ikappas.php-mysql"
-    ],
-    "settings": {
-        "#terminal.integrated.shell.linux": "/bin/bash"
-    },
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [80],
+	"name": "Laravel",
+	"image": "mcr.microsoft.com/devcontainers/php:1-8.2-bullseye",
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "cp .env.example .env && composer install && php artisan key:generate && yarn install && yarn run development",
-    "portsAttributes": {
-        "80": {
-            "label": "HTTP"
-        }
-    }
+	"forwardPorts": [
+		8080
+	],
+
+	"extensions": [
+		"openssl",
+		"php-bcmath",
+		"php-curl",
+		"php-json",
+		"php-mbstring",
+		"php-mysql",
+		"php-tokenizer",
+		"php-xml",
+		"php-zip",
+		"php-intl"
+	],
+
+	"runArgs": [
+		// Mount local Composer cache folder into the container to speed up Composer operations.
+		"-v", "${localWorkspaceFolder}/.composer:/home/vscode/.composer",
+
+		// Mount local MySQL data folder into the container.
+		"-v", "${localWorkspaceFolder}/.mysql:/var/lib/mysql"
+	],
+
+	"postCreateCommand": "sudo chown vscode:vscode /var/lib/mysql",
+
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	}
 }
