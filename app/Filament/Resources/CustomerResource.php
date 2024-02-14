@@ -21,6 +21,10 @@ use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
+
+//export
+use Filament\Notifications\Notification;
+
 class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
@@ -49,8 +53,12 @@ class CustomerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                //
+        ->columns([
+            TextColumn::make('name'),
+            TextColumn::make('phone'),
+            TextColumn::make('nrc_no'),
+            TextColumn::make('city_code'),
+            TextColumn::make('address'),
             ])
             ->filters([
                 //
